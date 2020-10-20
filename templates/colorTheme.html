@@ -1,0 +1,48 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Youtube Download</h1>
+
+    <a href="{{details[3]}}">
+      <img src="{{details[0]}}" alt="Thumbnail" />
+      <h2>Title: {{details[1]}}</h2>
+      <h2>Channel: {{details[2]}}</h2>
+    </a>
+    {% for i in range(streams|length) %}
+    <a href="/download/{{ streams[i][0]}}">
+      <p>
+        Size: {{ streams[i][2]}} <br />
+        Quality: {{streams[i][1]}} <br />
+        Type: {{streams[i][3]}}
+      </p></a
+    >
+    {% endfor %}
+  </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <center>
+      <h1>Getting your download ready!</h1>
+    </center>
+
+    <script>
+      downloadComplete = "{{ downloadStatus }}";
+      fileName = "{{ fileName }}";
+      if (downloadComplete == "True") {
+        window.location.replace("/download/f/" + fileName);
+      }
+    </script>
+  </body>
+</html>

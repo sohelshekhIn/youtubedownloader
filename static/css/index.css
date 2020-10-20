@@ -1,0 +1,229 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  font-family: "Roboto", sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.loading {
+  z-index: 20;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(247, 243, 243, 0.925);
+  display: none;
+}
+
+.loading .child{
+  width: inherit;
+  height: 100vh;
+  display: inherit;
+  flex-direction: inherit;
+  background-color: transparent;
+  justify-content: inherit;
+  align-items: inherit;
+  top: 0;
+  left: 0;
+  position: absolute;
+}
+
+.loadingGif{
+  width: 30%;
+}
+
+.loadingTxt{
+  transform: translateY(-10px);
+}
+
+.main {
+  width: 100%;
+  height: auto;
+  position: relative;
+}
+
+.container {
+  height: 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 10px;
+  background-color: #ffffff;
+}
+
+.msg {
+  width: 90%;
+  height: 30%;
+  margin-top: 110px;
+  display: flex;
+  padding: 20px 10px;
+  flex-direction: column;
+  justify-content: center;
+}
+.msg h2 {
+  font-size: 35px;
+}
+
+.msg h6 {
+  font-size: 15px;
+}
+
+.inputForm {
+  width: 90%;
+  height: 60%;
+  display: flex;
+  padding: 50px 0px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inputForm form {
+  width: 100%;
+  height: 15%;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inputForm form #url {
+  width: 98%;
+  height: 30px;
+  border: none;
+  padding: 16px;
+  font-size: 15px;
+  font-weight: 550;
+  font-family: "Roboto", sans-serif;
+  background-color: #4cce59;
+  color: #ffffff;
+  border-radius: 5px;
+  outline: none;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+
+#url::placeholder {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.messageContainer{
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.flashMessage {
+  margin-top: 20px;
+  width: 90%;
+  height: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border: 2px solid;
+  border-radius: 8px;
+  background-color: #ffffff;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+}
+
+.danger{
+  color: red;
+  border-color: red;
+}
+.success{
+  color: #4cce59;
+  border-color: #4cce59;
+}
+
+.warning{
+  color: rgb(255, 230, 0);
+  border-color: rgb(255, 230, 0);
+}
+
+
+svg#wave {
+  margin-top: 50px;
+  transform: translateY(4px);
+  -webkit-transform: translateY(4px);
+  -moz-transform: translateY(4px);
+  -ms-transform: translateY(4px);
+  -o-transform: translateY(4px);
+}
+
+.footer {
+  padding: 0px;
+  margin: 0px;
+  color: #ffffff;
+  height: 150px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  background-color: #4cce59;
+}
+
+.leftFoot {
+  padding: 10px;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.leftFoot #indianFlag {
+  width: 20px;
+  transform: translateY(5px);
+  -webkit-transform: translateY(5px);
+  -moz-transform: translateY(5px);
+  -ms-transform: translateY(5px);
+  -o-transform: translateY(5px);
+}
+.leftFoot h4 {
+  margin-left: 15px;
+  font-size: 17px;
+}
+.leftFoot a {
+  margin-left: 15px;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.rightFoot {
+  width: 30%;
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.rightFoot a {
+  width: 60px;
+  color: #4cce59;
+  background-color: #ffffff;
+  border-radius: 4px;
+  margin-top: 20px;
+  padding: 5px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+}

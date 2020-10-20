@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Details -Youtube Download</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+  </head>
+  <body>
+    <div id="loading" class="loading">
+      <div class="child">
+        <img class="loadingGif" src="/static/images/loading.gif" alt="Loading" />
+        <p class="loadingTxt">Loading...</p>
+      </div>
+    </div>
+    <div id="main" class="main">
+      <div class="container light-redish-bg dark-purpleish">
+        <div class="yt-video">
+          <img class="yt-thumbnail" src="{{details[0]}}" alt="Thumbnail" />
+          <a
+            href="{{details[3]}}"
+            class="yt-video-opener"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div class="yt-info">
+              <h3 class="yt-title">{{details[1]}}</h3>
+              <h6 class="yt-channelName">By {{details[2]}}</h6>
+            </div>
+          </a>
+        </div>
+        <div class="yt-streams">
+          <h3 class="avl-str">- Available Streams -</h3>
+
+          {% for i in range(streams|length) %}
+          <a href="/download/{{streams[i][0]}}" id="stream-link" class="stream-link">
+            <img
+              class="stream-type str"
+              src="/static/images/{{streams[i][3]}}.svg"
+              alt="stream type"
+            />
+            <p class="stream-quality str">{{streams[i][1]}}</p>
+            <p class="stream-size str">{{streams[i][2]}}</p>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+      <svg
+        id="wave"
+        class="inverted"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1440 320"
+      >
+        <path
+          fill="#4cce59"
+          fill-opacity="1"
+          d="M0,224L80,197.3C160,171,320,117,480,117.3C640,117,800,171,960,170.7C1120,171,1280,117,1360,90.7L1440,64L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
+          data-darkreader-inline-fill=""
+          style="--darkreader-inline-fill: #28934b"
+        ></path>
+      </svg>
+      <div class="footer">
+        <div class="leftFoot">
+          <h4>
+            Made with ❤️ in
+            <img
+              class="inverted"
+              id="indianFlag"
+              src="/static/images/indiaFlag.png"
+              alt="India"
+            />
+          </h4>
+          <a href="https://instagram.com/sohelshekh.in" target="_blank"
+            >@sohelshekh.in</a
+          >
+        </div>
+        <div class="rightFoot">
+          <a href="mailto:contact.sohelshekh@gmail.com">Contact</a>
+          <a href="mailto:query.sohelshekh@gmail.com">Query</a>
+        </div>
+      </div>
+    </div>
+    <script src="/static/js/details.js"></script>
+  </body>
+</html>
