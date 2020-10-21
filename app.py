@@ -5,9 +5,9 @@ from datetime import datetime
 import os
 import sys
 
+
 # Flask App Initialize
 app = Flask("__name__")
-
 #App Configurations
 app.secret_key = 'YT$#ek#@@!@$0#el'
 

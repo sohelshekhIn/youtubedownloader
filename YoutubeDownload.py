@@ -63,7 +63,7 @@ class YoutubeVideo():
         newStream = []
         for i in range(len(self.streams)):
             # if not "/webm" in str(self.streams[i].mime_type):
-            listStream = (i ,self.streams[i].resolution, self.convert_bytes(self.streams[i].filesize), self.streams[i].mime_type)
+            listStream = (i ,self.streams[i].resolution, self.convert_bytes(self.streams[i].filesize_approx), self.streams[i].mime_type)
             newStream.append(listStream)
         return self.removeDuplicateStreams(newStream)
 
