@@ -9,7 +9,11 @@
   <body>
     <div id="loading" class="loading">
       <div class="child">
-        <img class="loadingGif" src="/static/images/loading.gif" alt="Loading" />
+        <img
+          class="loadingGif"
+          src="/static/images/loading.gif"
+          alt="Loading"
+        />
         <p class="loadingTxt">Loading...</p>
       </div>
     </div>
@@ -32,15 +36,15 @@
         <div class="yt-streams">
           <h3 class="avl-str">- Available Streams -</h3>
 
-          {% for i in range(streams|length) %}
-          <a href="/download/{{streams[i][0]}}" id="stream-link" class="stream-link">
+          {% for i in range(streams[0]|length) %}
+          <a href="/download/{{streams[0][i][0]}}" id="stream-link" class="stream-link">
             <img
               class="stream-type str"
-              src="/static/images/{{streams[i][3]}}.svg"
+              src="/static/images/{{streams[0][i][3]}}.svg"
               alt="stream type"
             />
-            <p class="stream-quality str">{{streams[i][1]}}</p>
-            <p class="stream-size str">{{streams[i][2]}}</p>
+            <p class="stream-quality str">{{streams[0][i][1]}}</p>
+            <p class="stream-size str">{{streams[0][i][2]}}</p>
           </a>
           {% endfor %}
         </div>

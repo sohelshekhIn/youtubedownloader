@@ -1,9 +1,11 @@
 
+from flask import app
 from pytube import YouTube
-import requests
 
 class YoutubeVideo():
     def __init__(self, url):
+        """Youtube Class that allows to get details of the video, available streams of video, download video and many more 
+        """
         self.url = url
         self.Video = YouTube(url)
         self.streams = self.Video.streams
@@ -21,38 +23,61 @@ class YoutubeVideo():
 
         return size
 
-    def removeDuplicateStreams(self, streams):
-        videoStreamQuality = []
-        videoStreamPosition = []
-        videoNewStreams = []
-        audioStreamSize = []
-        audioStreamPosition = []
-        newAudioStream = []
+    def addAudioSize(self, videoFileSize) -> int:
+        """Adds the size of audio to videos which are not progressive (does not contain audio)
+
+        Args:
+            videoFileSize (byte): Takes video file size as bytes
+
+        Returns:
+            totalSize: Returns an int of calculated size
+        """
+        audioFile = self.streams.filter(only_audio=True).first()
+        audioSize = audioFile.filesize or audioFile.filesize_approx
+        totalSize = int(videoFileSize) + int(audioSize)
+        return int(totalSize)
         
-        for i in range(len(streams)):
-            if "video" in str(streams[i][3]):
-                if not "None" in str(streams[i][1]):
-                   if not "webm" in str(streams[i][3]):
-                    if not streams[i][1] in videoStreamQuality:
-                        videoStreamQuality.append(streams[i][1])
-                        videoStreamPosition.append(i)
-            elif "audio" in str(streams[i][3]):
-                if not streams[i][2] in audioStreamSize:
-                    audioStreamSize.append(streams[i][2])
-                    audioStreamPosition.append(i)
-                
-        for i in range(len(videoStreamPosition)):
-            videoNewStreams.append(streams[videoStreamPosition[i]])
-            videoNewStreams.sort(key=lambda tup: tup[1])
-            
-        for i in range(len(audioStreamPosition)):
-            audioStream = streams[audioStreamPosition[i]]
-            if str(audioStream[1]) == "None":
-                lst = list(audioStream)
-                lst[1] = "Audio"
-                audioStream = tuple(lst)
-            newAudioStream.append(audioStream)
-        return videoNewStreams + newAudioStream
+
+
+    def removeDuplicates(self, videoStreams, progressiveStreams) -> list:
+        """Removes duplicate video streams that are already present in progressive Streams
+
+        Args:
+            videoStreams (ListObject): List of video streams
+            progressiveStreams (ListObject): List of progressive streams
+
+        Returns:
+            videoStreams: Returns new sorted list of video streams
+        """
+        sortedVideoStreams = []
+        for i in range(len(progressiveStreams)):
+            for j in range(len(videoStreams)):
+                if str(videoStreams[j][1]) != "None":
+                    if not str(progressiveStreams[i][1]) ==  str(videoStreams[j][1]):
+                        sortedVideoStreams.append(videoStreams[j])
+
+        sortedVideoStreams = [t for t in (set(tuple(i) for i in sortedVideoStreams))]
+        sortedVideoStreams.sort(key = lambda x: x[1])  
+        return sortedVideoStreams
+    
+    
+
+    def get_origianl_streams(self):
+        """"
+        Returns list of original streams directly from pytube
+        """
+        return self.streams
+
+    def is_progressive(self, stremid) -> bool:
+        """Checks whether the stream with itag stream id is a progressive stream or not!
+
+        Args:
+            stremid (int): itag of stream
+
+        Returns:
+            bool: Returns True or False according to situation
+        """
+        return self.streams.get_by_itag(int(stremid)).is_progressive
 
 
     def get_streams(self):
@@ -60,12 +85,39 @@ class YoutubeVideo():
         Returns array of streams with 
         stream_id, stream_resolution, stream_filesize, stream_mime_type
         """
-        newStream = []
-        for i in range(len(self.streams)):
-            # if not "/webm" in str(self.streams[i].mime_type):
-            listStream = (i ,self.streams[i].resolution, self.convert_bytes(self.streams[i].filesize_approx), self.streams[i].mime_type)
-            newStream.append(listStream)
-        return self.removeDuplicateStreams(newStream)
+        userStreams = []
+        audioStreams = self.streams.filter(only_audio=True)
+        videoStreams = self.streams.filter(subtype="mp4", adaptive=True, only_video=True)
+        progressiveStreams = self.streams.filter(progressive="True")
+        audioStreamsFormatted = []
+        videoStreamsFormatted = []
+        progressiveStreamsFormatted = []
+        audioToJoin = []
+        
+        for i in range(len(audioStreams)):
+            audioStream = (audioStreams[i].itag, audioStreams[i].abr, self.convert_bytes(audioStreams[i].filesize or videoStreams[i].filesize_approx), audioStreams[i].type)
+            audioStreamsFormatted.append(audioStream)
+
+        for i in range(len(progressiveStreams)):
+                progressiveStream = (progressiveStreams[i].itag, progressiveStreams[i].resolution, self.convert_bytes(progressiveStreams[i].filesize or progressiveStreams[i].filesize_approx), progressiveStreams[i].type)
+                progressiveStreamsFormatted.append(progressiveStream)
+        
+        audioStreamsFormatted.sort(key = lambda x: x[1])
+        progressiveStreamsFormatted.sort(key = lambda x: x[1])
+        
+        if (len(progressiveStreams) < 4 and len(videoStreams) > 4):            
+            for i in range(len(videoStreams)):
+                videoStream = (videoStreams[i].itag, videoStreams[i].resolution, self.convert_bytes(self.addAudioSize(videoStreams[i].filesize or videoStreams[i].filesize_approx)), videoStreams[i].type)
+                videoStreamsFormatted.append(videoStream)
+                audioToJoin.append(videoStreams[i].itag)
+                
+            videoStreamsFormatted = self.removeDuplicates(videoStreamsFormatted, progressiveStreamsFormatted)
+            userStreams = videoStreamsFormatted + progressiveStreamsFormatted + audioStreamsFormatted
+        elif (len(progressiveStreams) > 4 and len(videoStreams) < 4):
+            userStreams = progressiveStreamsFormatted + audioStreamsFormatted
+        return (userStreams, audioToJoin)
+
+
 
     def download(self, stream_id, file_path = None):
         """
@@ -74,8 +126,14 @@ class YoutubeVideo():
             stream_id - int: id of stream (found in get_streams())
             file_path - str: (Optional) Path where file is to be downloaded, default is working dir!
         """
-        stream_id = self.get_streams()[0][0]
-        self.Video.streams[stream_id].download(file_path)
+        self.streams.get_by_itag(stream_id).download(file_path)
+
+
+    def downloadAudio(self, filepath):
+        """
+        Downloads Audio File of the Video 
+        """
+        self.Video.streams.filter(only_audio=True).first().download(filepath)
 
     def get_details(self):
         """
@@ -104,9 +162,12 @@ class YoutubeVideo():
 
 if __name__ == "__main__":
     url = "https://youtu.be/6kwrsQLQnhA"
+    url = "https://www.youtube.com/watch?v=GwgXoPBt0dM"
+    url = "https://www.youtube.com/watch?v=-d9nvq3402M"
     yt = YoutubeVideo(url)
+    # print(yt.get_origianl_streams())
     print(yt.get_details())
-    print(yt.get_streams)
+    print(yt.get_streams())
     # yt.download(2)
     
     
@@ -114,6 +175,7 @@ if __name__ == "__main__":
     
     
 """
+For Reference
 [
 <Stream: itag="18" mime_type="video/mp4" res="360p" fps="30fps" vcodec="avc1.42001E" acodec="mp4a.40.2" progressive="True" type="video">,
 <Stream: itag="244" mime_type="video/webm" res="480p" fps="30fps" vcodec="vp9" progressive="False" type="video">,

@@ -9,7 +9,11 @@
   <body>
     <div id="loading" class="loading">
       <div class="child">
-        <img class="loadingGif" src="/static/images/loading.gif" alt="Loading" />
+        <img
+          class="loadingGif"
+          src="/static/images/loading.gif"
+          alt="Loading"
+        />
         <p class="loadingTxt">Loading...</p>
       </div>
     </div>
@@ -22,13 +26,13 @@
 
         <div class="inputForm inverted">
           <form
-          action="/details"
-          method="POST"
-          onsubmit="navigateLoading()"
-          id="yt-url"
-        
+            action="/details"
+            method="POST"
+            onsubmit="navigateLoading()"
+            id="yt-url"
           >
             <input
+              autofocus
               placeholder="Paste video link"
               class="light-skinish-bg"
               type="url"
@@ -37,13 +41,13 @@
             />
           </form>
           <div class="messageContainer">
-
-            {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {% for category, message in messages %}
-              <div class="{{category}} flashMessage">
-                <p>{{ message }}</p>
-              </div>
-              {% endfor %} {% endif %} {% endwith %}
+            {% with messages = get_flashed_messages(with_categories=true) %} {%
+            if messages %} {% for category, message in messages %}
+            <div class="{{category}} flashMessage">
+              <p>{{ message }}</p>
             </div>
+            {% endfor %} {% endif %} {% endwith %}
+          </div>
         </div>
       </div>
       <svg
@@ -79,7 +83,7 @@
           <a href="mailto:contact.sohelshekh@gmail.com">Contact</a>
           <a href="mailto:query.sohelshekh@gmail.com">Query</a>
         </div>
-      </div>  
+      </div>
     </div>
     <script defer src="/static/js/index.js"></script>
   </body>
