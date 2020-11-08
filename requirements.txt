@@ -7,7 +7,7 @@ idna==2.10
 itsdangerous==1.1.0
 Jinja2==2.11.2
 MarkupSafe==1.1.1
-pytube3==9.6.4
+pytube @ git+https://github.com/nficano/pytube@1776b2fde778beb28da746c0898c47b9d7500127
 requests==2.24.0
 typing-extensions==3.7.4.3
 urllib3==1.25.11
