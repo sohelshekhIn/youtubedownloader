@@ -89,7 +89,6 @@ def get_file_extension(filename):
 
 # Check whether the request was for an audio or video
 def checkFileRequest(streams, stream_id) -> bool:
-    print(streams)
     for i in range(len(streams[0])):
         if str(streams[0][i][0]) == str(stream_id):
             if "audio" in str(streams[0][i][3]):
@@ -128,7 +127,6 @@ def details():
             if "get_ytplayer_config" in str(sys.exc_info()[1]):
                 flash("Enter valid video url!", "danger" )
             elif "getaddrinfo failed" in str(sys.exc_info()[1]):
-                network = False
                 flash("Failed to get data. Please check your internet connection", "danger")
             elif "TimeoutError" in str(sys.exc_info()[1]):
                 flash("Connection Timeout, took too long to respond! Check your internet connection.", "danger")
@@ -174,4 +172,4 @@ def methodNotAllowed(error):
     return render_template("405.html")
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5001)
+    app.run(debug=False)
