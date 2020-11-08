@@ -61,7 +61,6 @@
       downloadComplete = "{{ downloadStatus }}";
       fileName = "{{ fileName }}";
       if (downloadComplete == "True") {
-        console.log(fileName)
         window.location.replace("/download/f/" + fileName);
         setTimeout(() => {
           window.location.replace("/");
