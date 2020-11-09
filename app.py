@@ -38,14 +38,6 @@ def removeFile(path,fileName):
 
 # Download Status to True for redirection and run remove file function
 def redirectUser(stream, filepath):
-    print(f"""
-          
-          ----------------------------------------
-          
-                {filepath}
-          
-          ----------------------------------
-          """)
     global downloadStatus, download_file_name, isAudio, is_notProgressive, audioFilePath
     downloadStatus = True
     oldFilePath = filepath
@@ -53,14 +45,6 @@ def redirectUser(stream, filepath):
     fileName = secure_filename(fileName)
     filepath = os.path.join(YOUTUBE_FILES, fileName)
     os.rename(oldFilePath, filepath)
-    print(f"""
-          
-          ----------------------------------------
-          
-                {filepath}
-          
-          ----------------------------------
-          """)
     if isAudio:
         download_file_name = fileName.rsplit(".",1)[0] + ".mp3"
         audio_file_path = os.path.join(YOUTUBE_FILES, download_file_name)
@@ -72,14 +56,6 @@ def redirectUser(stream, filepath):
         download_file_name = fileName.rsplit(".", 1)[0] + "_ytdotin.mp4"
         cmd = f'ffmpeg -i {filepath} -i {audioFilePath} -c:v copy -c:a aac {os.path.join(YOUTUBE_FILES, download_file_name)}'
         subprocess.call(cmd, shell=True)
-        print(f"""
-          
-          ----------------------------------------
-          
-                {download_file_name}
-          
-          ----------------------------------
-          """)
         removeFile(YOUTUBE_FILES, fileName)
         removeFile(AUDIO_FILES, os.path.basename(audioFilePath))
     
@@ -113,6 +89,12 @@ def get_file_extension(filename):
 
 # Check whether the request was for an audio or video
 def checkFileRequest(streams, stream_id) -> bool:
+    print(f"""
+          
+          -----------------------
+          {streams}
+          
+          """)
     for i in range(len(streams[0])):
         if str(streams[0][i][0]) == str(stream_id):
             if "audio" in str(streams[0][i][3]):
