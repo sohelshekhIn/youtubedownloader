@@ -19,13 +19,23 @@
       </div>
     </div>
     <div id="main" class="main">
+      <div class="nav">
+          <a href="/" class="logo"><h1 class="nav_heading" >
+            Yd
+          </h1></a>
+          <div class="navChild">
+            <h2>YouTube Downloader</h2>
+            <p>Dot In</p>
+          </div>
+      </div>
       <div class="container light-redish-bg dark-purpleish">
         <div class="msg">
           <h2>Download <br />YouTube videos</h2>
-          <h6 class="light-purpleish">Paste & Proceed</h6>
+          <h6 class="light-purpleish">Audio & Video</h6>
         </div>
 
         <div class="inputForm inverted">
+          <p class="hr-s">Paste n Proceed</p>
           <form
             action="/details"
             method="POST"
@@ -33,13 +43,14 @@
             id="yt-url"
           >
             <input
-              autofocus
-              placeholder="Paste video link"
-              class="light-skinish-bg"
-              type="url"
-              name="url"
-              id="url"
+            autofocus
+            placeholder="Paste video link"
+            class="light-skinish-bg"
+            type="url"
+            name="url"
+            id="url"
             />
+   
           </form>
           <div class="messageContainer">
             {% with messages = get_flashed_messages(with_categories=true) %} {%

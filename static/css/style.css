@@ -4,6 +4,11 @@
   font-family: "Roboto", sans-serif;
 }
 
+@font-face{
+  src: url(/static/fonts/grand_hotle.ttf);
+  font-family: "Grand_Hotel";
+}
+
 a {
   text-decoration: none;
   color: #ffffff;
@@ -63,6 +68,61 @@ a {
   padding: 10px;
   background-color: #ffffff;
 }
+
+
+
+.nav{
+  width: 100%;
+  background-color: #4cce59;
+  height: 120px;
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.nav .logo{
+  font: 70px "Grand_Hotel";
+  margin-right: 20px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+}
+
+.nav .logo .nav_heading{
+  font: inherit;
+  margin: inherit;
+  color: #4cce59;
+}
+
+.navChild{
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}
+
+.navChild h2{
+  color: #ffffff;
+  font: 42px "Grand_Hotel";
+}
+
+.navChild p{
+  color: #ffffff;
+  width: 100%;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: right;
+  transform: translateY(-15px);
+}
+
+
+
 
 .yt-video {
   width: 90%;
@@ -196,7 +256,6 @@ svg#wave {
 .rightFoot {
   width: 30%;
   padding: 10px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -214,4 +273,190 @@ svg#wave {
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .loadingTxt{
+    font-size: 20px;
+    transform: translateY(-20px);
+  }
+  .container{
+    padding: 30px 40px;
+  }
+
+  .yt-video, .yt-streams{
+    width: 70%;
+  }
+
+  .yt-title{
+    font-size: 25px;
+  }
+  .yt-channelName{
+    font-size: 18px;
+  }
+
+  .yt-streams .avl-str{
+    font-size: 22px;
+  }
+
+  .stream-link{
+    width: 80%;
+    height: 45px;
+  }
+  .str{
+    margin: 0px 20px;
+    font-size: 20px;
+  }
+
+  .stream-type{
+    width: 40px;
+    height: 40px;
+  }
+
+  .leftFoot, .rightFoot{
+    padding: 10px 40px;
+  }
+
+  .leftFoot h4{
+    font-size: 20px;
+  }
+  .leftFoot a {
+    font-size: 17px;
+  }
+  .rightFoot a {
+    width: 70px;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .loadingGif{
+    width: 15%;
+  }
+  .nav{
+    display: flex;
+  }
+  .container{
+    padding: 30px 50px;
+    justify-content: center;
+  }
+
+  
+  .yt-video, .yt-streams{
+    width: 70%;
+  }
+
+  .yt-title{
+    font-size: 25px;
+  }
+  .yt-channelName{
+    font-size: 18px;
+  }
+
+  .yt-streams .avl-str{
+    font-size: 22px;
+  }
+
+  .stream-link{
+    width: 80%;
+    height: 45px;
+  }
+  .str{
+    margin: 0px 20px;
+    font-size: 20px;
+  }
+
+  .stream-type{
+    width: 40px;
+    height: 40px;
+  }
+
+
+  .leftFoot #indianFlag{
+    width: 30px;
+    margin-left: 5px;
+    transform: translateY(7px);
+  }
+
+  .leftFoot, .rightFoot{
+    padding: 10px 50px;
+  }
+  .nav{
+    display: flex;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+  .loadingGif{
+    width: 11%;
+  }
+  .loadingTxt{
+    transform: translateY(-20px);
+  }
+  .container {
+    padding: 35px 60px;
+  }
+
+  .yt-video, .yt-streams{
+    width: 30%;
+  }
+
+  .yt-title{
+    font-size: 25px;
+  }
+  .yt-channelName{
+    font-size: 18px;
+  }
+
+  .yt-streams .avl-str{
+    font-size: 22px;
+  }
+
+  .stream-link{
+    width: 80%;
+    height: 45px;
+  }
+  .str{
+    margin: 0px 20px;
+    font-size: 20px;
+  }
+
+  .stream-type{
+    width: 40px;
+    height: 40px;
+  }
+
+
+  .nav{
+    display: flex;
+  }
+
+  .footer{
+    justify-content: center;
+  }
+
+  .leftFoot, .rightFoot{
+    width: fit-content;
+    padding: 10px 250px;
+  }
+
+  .leftFoot #indianFlag{
+    width: 35px;
+    margin-left: 5px;
+    transform: translateY(10px);
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .loadingGif{
+    width: 8%;
+}
+
+.nav{
+  display: flex;
+}
 }

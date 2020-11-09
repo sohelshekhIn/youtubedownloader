@@ -4,6 +4,13 @@
   font-family: "Roboto", sans-serif;
 }
 
+
+@font-face {
+  src: url(/static/fonts/grand_hotle.ttf);
+  font-family: Grand_Hotel;
+}
+
+
 a {
   text-decoration: none;
   color: #ffffff;
@@ -60,6 +67,56 @@ a {
   background-color: #ffffff;
 }
 
+.nav{
+  width: 100%;
+  background-color: #4cce59;
+  height: 120px;
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.nav .logo{
+  font: 70px "Grand_Hotel";
+  margin-right: 20px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+}
+
+.nav .logo .nav_heading{
+  font: inherit;
+  margin: inherit;
+  color: #4cce59;
+}
+
+.navChild{
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+}
+
+.navChild h2{
+  color: #ffffff;
+  font: 42px "Grand_Hotel";
+}
+
+.navChild p{
+  color: #ffffff;
+  width: 100%;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: right;
+  transform: translateY(-15px);
+}
+
 .msg {
   width: 90%;
   height: 30%;
@@ -86,6 +143,13 @@ a {
   align-items: center;
 }
 
+.hr-s{
+  width: 100%;
+  text-align: left;
+  color: #4cce59;
+  font-weight: 700;
+  }
+
 .inputForm form {
   width: 100%;
   height: 15%;
@@ -94,6 +158,8 @@ a {
   align-items: center;
   justify-content: center;
 }
+
+
 
 .inputForm form #url {
   width: 98%;
@@ -208,7 +274,6 @@ svg#wave {
 .rightFoot {
   width: 30%;
   padding: 10px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -222,8 +287,144 @@ svg#wave {
   border-radius: 4px;
   margin-top: 20px;
   padding: 5px;
+  text-align: center;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
+}
+
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+
+  .loadingTxt{
+    font-size: 20px;
+    transform: translateY(-20px);
+  }
+  .container{
+    padding: 30px 40px;
+  }
+
+  .msg h2{
+    font-size: 42px;
+  }
+
+  .leftFoot, .rightFoot{
+    padding: 10px 40px;
+  }
+
+  .leftFoot h4{
+    font-size: 20px;
+  }
+  .leftFoot a {
+    font-size: 17px;
+  }
+  .rightFoot a {
+    width: 70px;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
+
+  .loadingGif{
+    width: 15%;
+  }
+  .nav{
+    display: flex;
+  }
+
+  .container{
+    padding: 30px 50px;
+    justify-content: center;
+  }
+
+  .msg, .inputForm{
+    width: 75%;
+  }
+
+  .msg{
+    margin-top: 80px;
+  }
+
+  .messageContainer{
+    width: 80%;
+  }
+
+  .msg h2{
+    font-size: 45px;
+  }
+
+  .msg h2, .msg h6{
+    text-align: center;
+  }
+
+  .leftFoot #indianFlag{
+    width: 30px;
+    margin-left: 5px;
+    transform: translateY(7px);
+  }
+
+  .leftFoot, .rightFoot{
+    padding: 10px 50px;
+  }
+
+}
+
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+  .loadingGif{
+    width: 11%;
+  }
+  .loadingTxt{
+    transform: translateY(-20px);
+  }
+
+  .nav{
+    display: flex;
+  }
+
+  .container {
+    padding: 35px 60px;
+  }
+
+  .msg, .inputForm{
+    width: 65%;
+  }
+
+  .footer{
+    justify-content: center;
+  }
+
+  .leftFoot, .rightFoot{
+    width: fit-content;
+    padding: 10px 130px;
+  }
+
+  .leftFoot #indianFlag{
+    width: 35px;
+    margin-left: 5px;
+    transform: translateY(10px);
+  }
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
+  .loadingGif{
+    width: 8%;
+  }
+
+  .nav{
+    display: flex;
+  }
+
+  .msg, .inputForm, .messageContainer{
+    max-width: 50em;
+  }
 }
