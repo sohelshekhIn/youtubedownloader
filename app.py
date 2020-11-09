@@ -53,7 +53,14 @@ def redirectUser(stream, filepath):
     fileName = secure_filename(fileName)
     filepath = os.path.join(YOUTUBE_FILES, fileName)
     os.rename(oldFilePath, filepath)
-    
+    print(f"""
+          
+          ----------------------------------------
+          
+                {filepath}
+          
+          ----------------------------------
+          """)
     if isAudio:
         download_file_name = fileName.rsplit(".",1)[0] + ".mp3"
         audio_file_path = os.path.join(YOUTUBE_FILES, download_file_name)
@@ -65,6 +72,16 @@ def redirectUser(stream, filepath):
         download_file_name = fileName.rsplit(".", 1)[0] + "_ytdotin.mp4"
         cmd = f'ffmpeg -i {filepath} -i {audioFilePath} -c:v copy -c:a aac {os.path.join(YOUTUBE_FILES, download_file_name)}'
         subprocess.call(cmd, shell=True)
+        print(f"""
+          
+          ----------------------------------------
+          
+                {download_file_name}
+                {os.chdir(os.path.join("app", YOUTUBE_FILES))}
+                {os.getcwd()}
+          
+          ----------------------------------
+          """)
         removeFile(YOUTUBE_FILES, fileName)
         removeFile(AUDIO_FILES, os.path.basename(audioFilePath))
     
