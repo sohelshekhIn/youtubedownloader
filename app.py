@@ -77,8 +77,6 @@ def redirectUser(stream, filepath):
           ----------------------------------------
           
                 {download_file_name}
-                {os.chdir(YOUTUBE_FILES)}
-                {os.getcwd()}
           
           ----------------------------------
           """)
