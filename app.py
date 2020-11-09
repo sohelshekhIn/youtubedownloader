@@ -38,6 +38,14 @@ def removeFile(path,fileName):
 
 # Download Status to True for redirection and run remove file function
 def redirectUser(stream, filepath):
+    print(f"""
+          
+          ----------------------------------------
+          
+                {filepath}
+          
+          ----------------------------------
+          """)
     global downloadStatus, download_file_name, isAudio, is_notProgressive, audioFilePath
     downloadStatus = True
     oldFilePath = filepath
