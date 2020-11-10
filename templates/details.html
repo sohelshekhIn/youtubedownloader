@@ -46,18 +46,19 @@
         </div>
         <div class="yt-streams">
           <h3 class="avl-str">- Available Streams -</h3>
-
-          {% for i in range(streams[0]|length) %}
-          <a href="/download/{{streams[0][i][0]}}" id="stream-link" class="stream-link">
-            <img
+          <div class="wrapper" id="wrapper" >
+            {% for i in range(streams[0]|length) %}
+            <a href="/download/{{streams[0][i][0]}}" id="stream-link" class="stream-link">
+              <img
               class="stream-type str"
               src="/static/images/{{streams[0][i][3]}}.svg"
               alt="stream type"
-            />
-            <p class="stream-quality str">{{streams[0][i][1]}}</p>
-            <p class="stream-size str">{{streams[0][i][2]}}</p>
-          </a>
-          {% endfor %}
+              />
+              <p class="stream-quality str">{{streams[0][i][1]}}</p>
+              <p class="stream-size str">{{streams[0][i][2]}}</p>
+            </a>
+            {% endfor %}
+          </div>
         </div>
       </div>
     </div>

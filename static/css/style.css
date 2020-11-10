@@ -2,6 +2,11 @@
   margin: 0px;
   padding: 0px;
   font-family: "Roboto", sans-serif;
+  outline: none;
+}
+
+body{
+  overflow: hidden;
 }
 
 @font-face{
@@ -183,6 +188,7 @@ a {
 }
 
 .stream-link {
+  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;  
   width: 90%;
   height: 40px;
   margin: 15px 0px;
@@ -197,6 +203,11 @@ a {
   -moz-border-radius: 30px;
   -ms-border-radius: 30px;
   -o-border-radius: 30px;
+}
+
+
+.stream-link:hover{
+  box-shadow: 0px 0px 10px rgba(0,0,0, 0.3);
 }
 
 .str {
@@ -281,6 +292,7 @@ svg#wave {
     font-size: 20px;
     transform: translateY(-20px);
   }
+
   .container{
     padding: 30px 40px;
   }
@@ -294,6 +306,9 @@ svg#wave {
   }
   .yt-channelName{
     font-size: 18px;
+  }
+  #wrapper{
+    width: 90%;
   }
 
   .yt-streams .avl-str{
@@ -342,9 +357,11 @@ svg#wave {
     justify-content: center;
   }
 
-  
+  #wrapper{
+    width: 90%;
+  }
   .yt-video, .yt-streams{
-    width: 70%;
+    width: 65%;
   }
 
   .yt-title{
@@ -389,7 +406,6 @@ svg#wave {
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
-
   .loadingGif{
     width: 11%;
   }
@@ -397,11 +413,24 @@ svg#wave {
     transform: translateY(-20px);
   }
   .container {
+    flex-direction: row;
     padding: 35px 60px;
+  }
+  .yt-video{
+    margin-right: 40px;
   }
 
   .yt-video, .yt-streams{
-    width: 30%;
+    width: 38%;
+    align-self: flex-start;
+    transform: translateX(-120px);
+  }
+
+  .wrapper{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 70vh;
   }
 
   .yt-title{
@@ -416,8 +445,10 @@ svg#wave {
   }
 
   .stream-link{
-    width: 80%;
+    width: 65%;
     height: 45px;
+    margin: 10px;
+    border-radius: 20px;
   }
   .str{
     margin: 0px 20px;

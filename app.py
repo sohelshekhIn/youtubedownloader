@@ -44,6 +44,8 @@ def redirectUser(stream, filepath):
     fileName = os.path.basename(filepath)
     fileName = secure_filename(fileName)
     filepath = os.path.join(YOUTUBE_FILES, fileName)
+    if os.path.exists(filepath):
+        os.remove(filepath)
     os.rename(oldFilePath, filepath)
     if isAudio:
         download_file_name = fileName.rsplit(".",1)[0] + ".mp3"
@@ -54,7 +56,7 @@ def redirectUser(stream, filepath):
         download_file_name = fileName
     elif not stream.is_progressive:
         download_file_name = fileName.rsplit(".", 1)[0] + "_ytdotin.mp4"
-        cmd = f'ffmpeg -i {filepath} -i {audioFilePath} -c:v copy -c:a aac {os.path.join(YOUTUBE_FILES, download_file_name)}'
+        cmd = f'ffmpeg -y -i {filepath} -i {audioFilePath} -c:v copy -c:a aac {os.path.join(YOUTUBE_FILES, download_file_name)}'
         subprocess.call(cmd, shell=True)
         removeFile(YOUTUBE_FILES, fileName)
         removeFile(AUDIO_FILES, os.path.basename(audioFilePath))
@@ -74,6 +76,8 @@ def audioDownloadComplete(stream, filepath):
     audioFileName = secure_filename(audioFileName)
     audioFileName = audioFileName.rsplit(".", 1)[0] + ".mp3"
     audioFilePath = os.path.join(AUDIO_FILES, audioFileName)
+    if os.path.exists(audioFilePath):
+        os.remove(audioFilePath)
     os.rename(filepath, audioFilePath)
     if os.path.exists(oldAudioFile):
         os.remove(oldAudioFile)
@@ -89,18 +93,15 @@ def get_file_extension(filename):
 
 # Check whether the request was for an audio or video
 def checkFileRequest(streams, stream_id) -> bool:
-    print(f"""
-          
-          -----------------------
-          {streams}
-          
-          """)
-    for i in range(len(streams[0])):
-        if str(streams[0][i][0]) == str(stream_id):
-            if "audio" in str(streams[0][i][3]):
-                return True
-            else:
-                return False
+    try:
+        for i in range(len(streams[0])):
+            if str(streams[0][i][0]) == str(stream_id):
+                if "audio" in str(streams[0][i][3]):
+                    return True
+                else:
+                    return False
+    except IndexError as e:
+        return None
 
 
 # Index url for site
@@ -146,6 +147,8 @@ def details():
 @app.route("/download/<string:stream_id>", methods=["GET"])
 def download(stream_id):
     global yt, downloadStatus, download_file_name, streams, isAudio, is_notProgressive, audioDownloadStart
+    if str(checkFileRequest(streams, stream_id)) == "None":
+        return redirect(request.referrer)
     isAudio = checkFileRequest(streams, stream_id)
     for i in range(len(streams[0])):
         if str(streams[0][i][0]) == str(stream_id):
