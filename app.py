@@ -31,7 +31,7 @@ AUDIO_FILES = "Audio_Dir"
 # Remove the downloaded file from the directory
 def removeFile(path,fileName):
     if str(path) == "False":
-        # os.remove(os.path.join(YOUTUBE_FILES, fileName))
+        os.remove(os.path.join(YOUTUBE_FILES, fileName))
         pass
     else:
         os.remove(os.path.join(path, fileName))
