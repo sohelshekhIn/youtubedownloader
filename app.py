@@ -32,7 +32,6 @@ AUDIO_FILES = "Audio_Dir"
 def removeFile(path,fileName):
     if str(path) == "False":
         os.remove(os.path.join(YOUTUBE_FILES, fileName))
-        pass
     else:
         os.remove(os.path.join(path, fileName))
 
@@ -103,6 +102,13 @@ def checkFileRequest(streams, stream_id) -> bool:
     except IndexError as e:
         return None
 
+
+@app.before_request
+def before_request():
+    if not request.is_secure and app.env != "development":
+        url = request.url.replace("http://", "https://", 1)
+        code = 301
+        return redirect(url, code=code)
 
 # Index url for site
 @app.route("/", methods=["GET"])
