@@ -1,11 +1,10 @@
-
-from flask import app
+# from flask import app
 from pytube import YouTube
 
-class YoutubeVideo():
+
+class YoutubeVideo:
     def __init__(self, url):
-        """Youtube Class that allows to get details of the video, available streams of video, download video and many more 
-        """
+        """Youtube Class that allows to get details of the video, available streams of video, download video and many more"""
         self.url = url
         self.Video = YouTube(url)
         self.streams = self.Video.streams
@@ -16,7 +15,7 @@ class YoutubeVideo():
         Takes 1 argument:
             size -int: Bytes
         """
-        for i in ['bytes', 'KB', 'MB', 'GB', 'TB']:
+        for i in ["bytes", "KB", "MB", "GB", "TB"]:
             if size < 1024.0:
                 return "%3.1f %s" % (size, i)
             size /= 1024.0
@@ -36,8 +35,6 @@ class YoutubeVideo():
         audioSize = audioFile.filesize or audioFile.filesize_approx
         totalSize = int(videoFileSize) + int(audioSize)
         return int(totalSize)
-        
-
 
     def removeDuplicates(self, videoStreams, progressiveStreams) -> list:
         """Removes duplicate video streams that are already present in progressive Streams
@@ -53,17 +50,15 @@ class YoutubeVideo():
         for i in range(len(progressiveStreams)):
             for j in range(len(videoStreams)):
                 if str(videoStreams[j][1]) != "None":
-                    if not str(progressiveStreams[i][1]) ==  str(videoStreams[j][1]):
+                    if not str(progressiveStreams[i][1]) == str(videoStreams[j][1]):
                         sortedVideoStreams.append(videoStreams[j])
 
         sortedVideoStreams = [t for t in (set(tuple(i) for i in sortedVideoStreams))]
-        sortedVideoStreams.sort(key = lambda x: x[1])  
+        sortedVideoStreams.sort(key=lambda x: x[1])
         return sortedVideoStreams
-    
-    
 
     def get_origianl_streams(self):
-        """"
+        """ "
         Returns list of original streams directly from pytube
         """
         return self.streams
@@ -79,47 +74,76 @@ class YoutubeVideo():
         """
         return self.streams.get_by_itag(int(stremid)).is_progressive
 
-
     def get_streams(self):
         """
-        Returns array of streams with 
+        Returns array of streams with
         stream_id, stream_resolution, stream_filesize, stream_mime_type
         """
         userStreams = []
         audioStreams = self.streams.filter(only_audio=True)
-        videoStreams = self.streams.filter(subtype="mp4", adaptive=True, only_video=True)
+        videoStreams = self.streams.filter(
+            subtype="mp4", adaptive=True, only_video=True
+        )
         progressiveStreams = self.streams.filter(progressive="True")
         audioStreamsFormatted = []
         videoStreamsFormatted = []
         progressiveStreamsFormatted = []
         audioToJoin = []
-        
+
         for i in range(len(audioStreams)):
-            audioStream = (audioStreams[i].itag, audioStreams[i].abr, self.convert_bytes(audioStreams[i].filesize or videoStreams[i].filesize_approx), audioStreams[i].type)
+            audioStream = (
+                audioStreams[i].itag,
+                audioStreams[i].abr,
+                self.convert_bytes(
+                    audioStreams[i].filesize or videoStreams[i].filesize_approx
+                ),
+                audioStreams[i].type,
+            )
             audioStreamsFormatted.append(audioStream)
 
         for i in range(len(progressiveStreams)):
-                progressiveStream = (progressiveStreams[i].itag, progressiveStreams[i].resolution, self.convert_bytes(progressiveStreams[i].filesize or progressiveStreams[i].filesize_approx), progressiveStreams[i].type)
-                progressiveStreamsFormatted.append(progressiveStream)
-        
-        audioStreamsFormatted.sort(key = lambda x: x[1])
-        progressiveStreamsFormatted.sort(key = lambda x: x[1])
-        
-        if (len(progressiveStreams) < 4 and len(videoStreams) > 4):            
+            progressiveStream = (
+                progressiveStreams[i].itag,
+                progressiveStreams[i].resolution,
+                self.convert_bytes(
+                    progressiveStreams[i].filesize
+                    or progressiveStreams[i].filesize_approx
+                ),
+                progressiveStreams[i].type,
+            )
+            progressiveStreamsFormatted.append(progressiveStream)
+
+        audioStreamsFormatted.sort(key=lambda x: x[1])
+        progressiveStreamsFormatted.sort(key=lambda x: x[1])
+
+        if len(progressiveStreams) < 4 and len(videoStreams) > 4:
             for i in range(len(videoStreams)):
-                videoStream = (videoStreams[i].itag, videoStreams[i].resolution, self.convert_bytes(self.addAudioSize(videoStreams[i].filesize or videoStreams[i].filesize_approx)), videoStreams[i].type)
+                videoStream = (
+                    videoStreams[i].itag,
+                    videoStreams[i].resolution,
+                    self.convert_bytes(
+                        self.addAudioSize(
+                            videoStreams[i].filesize or videoStreams[i].filesize_approx
+                        )
+                    ),
+                    videoStreams[i].type,
+                )
                 videoStreamsFormatted.append(videoStream)
                 audioToJoin.append(videoStreams[i].itag)
-                
-            videoStreamsFormatted = self.removeDuplicates(videoStreamsFormatted, progressiveStreamsFormatted)
-            userStreams = videoStreamsFormatted + progressiveStreamsFormatted + audioStreamsFormatted
-        elif (len(progressiveStreams) > 4 and len(videoStreams) < 4):
+
+            videoStreamsFormatted = self.removeDuplicates(
+                videoStreamsFormatted, progressiveStreamsFormatted
+            )
+            userStreams = (
+                videoStreamsFormatted
+                + progressiveStreamsFormatted
+                + audioStreamsFormatted
+            )
+        elif len(progressiveStreams) > 4 and len(videoStreams) < 4:
             userStreams = progressiveStreamsFormatted + audioStreamsFormatted
         return (userStreams, audioToJoin)
 
-
-
-    def download(self, stream_id, file_path = None):
+    def download(self, stream_id, file_path=None):
         """
         Dowloads the video:
         Takes 2 arguments:
@@ -128,17 +152,16 @@ class YoutubeVideo():
         """
         self.streams.get_by_itag(stream_id).download(file_path)
 
-
     def downloadAudio(self, filepath):
         """
-        Downloads Audio File of the Video 
+        Downloads Audio File of the Video
         """
         self.Video.streams.filter(only_audio=True).first().download(filepath)
 
     def get_details(self):
         """
         Returns details in tuple
-        (thumbnailUrl, title, authorName, url) 
+        (thumbnailUrl, title, authorName, url)
         """
         title = self.Video.title
         authorName = self.Video.author
@@ -152,13 +175,14 @@ class YoutubeVideo():
         filehandle, file_size
         """
         self.Video.register_on_progress_callback(func)
-    
+
     def download_complete(self, func):
         """
         Return functional argument:
         filepath;
         """
         self.Video.register_on_complete_callback(func)
+
 
 if __name__ == "__main__":
     url = "https://youtu.be/6kwrsQLQnhA"
@@ -169,11 +193,8 @@ if __name__ == "__main__":
     print(yt.get_details())
     print(yt.get_streams())
     # yt.download(2)
-    
-    
-    
-    
-    
+
+
 """
 For Reference
 [
